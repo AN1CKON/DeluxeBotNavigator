@@ -141,6 +141,12 @@ def register_navigation(dp):
             # Создаем новое сообщение со статистикой
             stats_message = await callback.message.answer(message_text, reply_markup=close_text_keyboard())
             await state.update_data(stats_message_id=stats_message.message_id)
+            
+        elif content_type == "review":
+            # Показываем форму отзыва
+            await callback.answer()
+            from .review_handler import show_review_form
+            await show_review_form(callback.message, state)
 
     @dp.callback_query(F.data == "close_text")
     async def close_text_callback(callback: types.CallbackQuery, state: FSMContext):

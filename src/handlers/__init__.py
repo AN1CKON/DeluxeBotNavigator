@@ -16,6 +16,7 @@ from .admin_menu import (
     register_stats_handlers
 )
 from .edit_actions import register_edit_actions
+from .user_interface.review_handler import register_review_handlers
 
 def register_handlers(dp, bot):
     # Порядок регистрации важен - сначала специфичные, потом общие
@@ -30,6 +31,7 @@ def register_handlers(dp, bot):
     register_admin_manage(dp, bot)  # Обработчик управления админами
     register_edit_actions(dp)  # Обработчики действий редактирования
     register_stats_handlers(dp)  # Обработчики управления статистикой
+    register_review_handlers(dp)  # Обработчики формы отзыва
     register_admin_cancel(dp)  # Должен быть последним для перехвата всех admin_cancel
 
     

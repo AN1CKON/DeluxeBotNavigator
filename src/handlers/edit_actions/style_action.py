@@ -98,6 +98,24 @@ def register_style_action(dp):
             await callback.message.answer(MSG_FEATURE_IN_DEVELOPMENT, reply_markup=kb, parse_mode="HTML")
             return
             
+        if content_type == "review":
+            # Для отзывов обновляем тип контента без изменения содержимого
+            success = update_menu_item(
+                item_id,
+                title=menu_item[2],  # title
+                content=None,  # content
+                content_type="review",
+                parent_id=menu_item[1]  # parent_id
+            )
+            
+            if success:
+                await notify_and_return_to_edit_menu(callback.message, item_id, state)
+            else:
+                await callback.message.answer("❌ Ошибка при изменении стиля")
+            
+            await state.clear()
+            return
+            
         # Запрашиваем новый контент для text, link, post_link
         await state.set_state(MenuState.waiting_for_style_content)
         msg = {
@@ -174,7 +192,12 @@ def edit_style_keyboard_with_back(item_id: int) -> types.InlineKeyboardMarkup:
             types.InlineKeyboardButton(text=BUTTON_LINK, callback_data="edit_style_ctype:link"),
             types.InlineKeyboardButton(text=BUTTON_ATTACHMENT, callback_data="edit_style_ctype:attachment")
         ],
-        # Третья строка - кнопка назад
+        # Третья строка - статистика и отзыв
+        [
+            types.InlineKeyboardButton(text="📊 Статистика", callback_data="edit_style_ctype:stats"),
+            types.InlineKeyboardButton(text=BUTTON_REVIEW, callback_data="edit_style_ctype:review")
+        ],
+        # Четвертая строка - кнопка назад
         [types.InlineKeyboardButton(text=BUTTON_BACK, callback_data=f"back_to_edit_menu:{item_id}")]
     ])
 

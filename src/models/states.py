@@ -25,9 +25,9 @@ class MenuState(StatesGroup):
     waiting_for_second_button = State()
     group_ready_to_lock = State()
 
-class WelcomeState(StatesGroup):
-    """Состояния для приветствия новых пользователей"""
-    showing_welcome = State()
+class ReviewStates(StatesGroup):
+    """Состояния для формы отзыва"""
+    waiting_for_review_content = State()
 
 class AdminStates(StatesGroup):
     """Состояния для управления администраторами"""

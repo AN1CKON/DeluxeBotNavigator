@@ -123,6 +123,12 @@ def register_admin_add(dp):
             await callback.message.answer(MSG_FEATURE_IN_DEVELOPMENT, reply_markup=kb, parse_mode="HTML")
             return
             
+        if content_type == "review":
+            # Для отзывов сразу переходим к выбору изображения
+            await state.set_state(MenuState.waiting_for_image)
+            await callback.message.answer(MSG_CHOOSE_IMAGE_STEP, reply_markup=image_choice_keyboard(), parse_mode="HTML")
+            return
+            
         # Для остальных типов сначала запрашиваем контент
         await state.set_state(MenuState.waiting_for_content)
         msg = {

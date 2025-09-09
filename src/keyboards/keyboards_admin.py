@@ -12,7 +12,8 @@ def get_style_display_text(content_type: str) -> str:
         "attachment": BUTTON_ATTACHMENT.split(' ', 1)[1],
         "link": BUTTON_LINK.split(' ', 1)[1],
         "post_link": BUTTON_LINK.split(' ', 1)[1],
-        "stats": "Статистика"
+        "stats": "Статистика",
+        "review": "Оставить отзыв"
     }
     return style_map.get(content_type, content_type)
 
@@ -127,7 +128,8 @@ def style_keyboard() -> InlineKeyboardMarkup:
          InlineKeyboardButton(text=BUTTON_TEXT, callback_data="ctype:text")],
         [InlineKeyboardButton(text=BUTTON_ATTACHMENT, callback_data="ctype:attachment"),
          InlineKeyboardButton(text=BUTTON_LINK, callback_data="ctype:link")],
-        [InlineKeyboardButton(text="📊 Статистика", callback_data="ctype:stats")],
+        [InlineKeyboardButton(text="📊 Статистика", callback_data="ctype:stats"),
+         InlineKeyboardButton(text=BUTTON_REVIEW, callback_data="ctype:review")],
         [InlineKeyboardButton(text=BUTTON_BACK, callback_data="back_to_title"), 
          InlineKeyboardButton(text=BUTTON_CANCEL, callback_data="admin_cancel")]
     ])
@@ -139,7 +141,8 @@ def edit_style_keyboard() -> InlineKeyboardMarkup:
          InlineKeyboardButton(text=BUTTON_TEXT, callback_data="edit_ctype:text")],
         [InlineKeyboardButton(text=BUTTON_ATTACHMENT, callback_data="edit_ctype:attachment"),
          InlineKeyboardButton(text=BUTTON_LINK, callback_data="edit_ctype:link")],
-        [InlineKeyboardButton(text="📊 Статистика", callback_data="edit_ctype:stats")],
+        [InlineKeyboardButton(text="📊 Статистика", callback_data="edit_ctype:stats"),
+         InlineKeyboardButton(text=BUTTON_REVIEW, callback_data="edit_ctype:review")],
         [InlineKeyboardButton(text=BUTTON_BACK, callback_data="back_to_edit_title"), 
          InlineKeyboardButton(text=BUTTON_CANCEL, callback_data="admin_cancel")]
     ])

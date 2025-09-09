@@ -64,6 +64,13 @@ SUCCESS_NOTIFICATION_DELAY = 1.5
 # Настройки безопасности
 ADMIN_CHECK_REQUIRED = True
 
+# Настройки email для отзывов
+REVIEW_EMAIL = os.getenv("REVIEW_EMAIL")
+SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+SMTP_USERNAME = os.getenv("SMTP_USERNAME")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+
 def validate_config() -> bool:
     """Проверяет корректность конфигурации (дополнительные проверки)"""
     if not TOKEN or len(TOKEN) < 40:
