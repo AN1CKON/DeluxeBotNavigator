@@ -29,6 +29,10 @@ class ReviewStates(StatesGroup):
     """Состояния для формы отзыва"""
     waiting_for_review_content = State()
 
+class WelcomeState(StatesGroup):
+    """Состояния для приветствия новых пользователей"""
+    showing_welcome = State()
+
 class AdminStates(StatesGroup):
     """Состояния для управления администраторами"""
     waiting_for_new_admin_id = State()

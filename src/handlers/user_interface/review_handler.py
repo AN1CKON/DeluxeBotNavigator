@@ -54,9 +54,16 @@ async def send_review_email(review_text: str, user_info: dict) -> bool:
         msg.attach(MIMEText(body, 'plain', 'utf-8'))
 
         # Отправляем email
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
-        server.login(SMTP_USERNAME, SMTP_PASSWORD)
+        if SMTP_PORT == 465:
+            # SSL соединение
+            server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT)
+            server.login(SMTP_USERNAME, SMTP_PASSWORD)
+        else:
+            # STARTTLS соединение (для портов 587, 25)
+            server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+            server.starttls()
+            server.login(SMTP_USERNAME, SMTP_PASSWORD)
+
         text = msg.as_string()
         server.sendmail(SMTP_USERNAME, REVIEW_EMAIL, text)
         server.quit()
