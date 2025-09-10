@@ -4,10 +4,10 @@ import asyncio
 from aiogram import types, F
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.context import FSMContext
-from ..common.utils import safe_delete_message
-from ...models.states import AdminStates
-from ...database.plugin_stats import get_all_plugin_stats, add_plugin_stat, update_plugin_stat, get_plugin_stat_by_id
-from ...keyboards.keyboards_admin import cancel_button
+from src.handlers.common.utils import safe_delete_message
+from src.models import AdminStates
+from src.database.plugin_stats import get_all_plugin_stats, add_plugin_stat, update_plugin_stat, get_plugin_stat_by_id
+from src.keyboards.keyboards_admin import cancel_button
 
 def register_stats_handlers(dp):
     """Регистрация обработчиков управления статистикой плагинов"""

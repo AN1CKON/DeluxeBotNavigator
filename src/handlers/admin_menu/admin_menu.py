@@ -2,15 +2,20 @@
 
 from aiogram import types, F
 from aiogram.filters import Command
-from aiogram.types import FSInputFile
-from ..common.utils import is_admin, safe_delete_message, show_main_menu_for_callback
-from ...keyboards.keyboards_admin import admin_keyboard
-from ...keyboards.keyboards import build_keyboard
-from ...config.config import get_image_path
-from ...database import update_admin_info
-from ...utils.texts import *
+from aiogram.types import FSInputFile, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.fsm.context import FSMContext
+from src.handlers.common.utils import is_admin, safe_delete_message, show_main_menu_for_callback
+from src.keyboards.keyboards_admin import admin_keyboard
+from src.keyboards.keyboards import build_keyboard
+from src.config.config import get_image_path
+from src.database import update_admin_info
+from src.utils.texts import *
+from src.models import AdminStates
+from src.handlers.admin_menu.admin_stats import show_stats_management
+from src.handlers.user_interface.review_ui.review_stats import show_reviews_management
 
-def register_admin_menu(dp, bot):
+def register_admin_menu_handlers(dp, bot):
+    """Регистрация основных обработчиков админ-меню"""
 
     @dp.message(Command("admin"))
     async def admin_panel_command(message: types.Message):
@@ -52,6 +57,23 @@ def register_admin_menu(dp, bot):
             return await callback.answer(NO_ACCESS_MESSAGE, show_alert=True)
         
         await safe_delete_message(callback.message)
-        # Импортируем здесь чтобы избежать циклических импортов
-        from .admin_stats import show_stats_management
         await show_stats_management(callback.message)
+
+    @dp.callback_query(F.data == "manage_reviews")
+    async def manage_reviews_callback(callback: types.CallbackQuery):
+        """Обработчик управления отзывами"""
+        if not is_admin(callback.from_user.id):
+            return await callback.answer(NO_ACCESS_MESSAGE, show_alert=True)
+
+        await safe_delete_message(callback.message)
+        await show_reviews_management(callback.message)
+
+    @dp.callback_query(F.data == "back_to_admin")
+    async def back_to_admin_callback(callback: types.CallbackQuery):
+        """Обработчик возврата в админ-панель"""
+        if not is_admin(callback.from_user.id):
+            return await callback.answer(NO_ACCESS_MESSAGE, show_alert=True)
+        
+        await safe_delete_message(callback.message)
+        photo = FSInputFile(get_image_path("admin.JPG"))
+        await callback.message.answer_photo(photo, caption=ADMIN_PANEL_TITLE, reply_markup=admin_keyboard())

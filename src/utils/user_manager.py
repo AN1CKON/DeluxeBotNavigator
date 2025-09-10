@@ -8,7 +8,7 @@ import sqlite3
 import sys
 import os
 from pathlib import Path
-from ..config.config import DB_PATH
+from src.config.config import DB_PATH
 
 # Добавляем корневую папку проекта в Python path
 project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

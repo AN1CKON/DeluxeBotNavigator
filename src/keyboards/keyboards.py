@@ -1,9 +1,9 @@
 """Основные клавиатуры для навигации DeluxeBotNavigator"""
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from ..database import get_menu_items, get_menu_item, has_children
-from ..utils import is_admin
-from ..utils.texts import *
+from src.database import get_menu_items, get_menu_item, has_children
+from src.utils import is_admin
+from src.utils.texts import *
 
 # ========== ОСНОВНЫЕ КЛАВИАТУРЫ ==========
 

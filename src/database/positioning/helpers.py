@@ -4,7 +4,7 @@
 
 import logging
 from typing import Optional, List, Tuple
-from ..base import get_db
+from src.database.base import get_db
 
 logger = logging.getLogger(__name__)
 

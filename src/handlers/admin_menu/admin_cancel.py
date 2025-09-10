@@ -3,10 +3,10 @@
 from aiogram import types, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import FSInputFile
-from ..common.utils import safe_delete_message
-from ...keyboards.keyboards_admin import admin_keyboard
-from ...config.config import get_image_path
-from ...utils.texts import *
+from src.handlers.common.utils import safe_delete_message
+from src.keyboards.keyboards_admin import admin_keyboard
+from src.config.config import get_image_path
+from src.utils.texts import *
 
 def register_admin_cancel(dp):
     """Централизованный обработчик отмены админ-действий"""

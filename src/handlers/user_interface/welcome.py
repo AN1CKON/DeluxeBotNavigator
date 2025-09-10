@@ -3,12 +3,12 @@
 from aiogram import types, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import FSInputFile
-from ...models.states import WelcomeState
-from ...keyboards.keyboards import welcome_keyboard, welcome_mobile_keyboard
-from ..common.utils import safe_delete_message, show_main_menu_for_callback
-from ...database import mark_welcome_shown
-from ...config.config import get_video_path
-from ...utils.texts import WELCOME_MESSAGE, WELCOME_MESSAGE_MOBILE
+from src.models import WelcomeState
+from src.keyboards.keyboards import welcome_keyboard, welcome_mobile_keyboard
+from src.handlers.common.utils import safe_delete_message, show_main_menu_for_callback
+from src.database import mark_welcome_shown
+from src.config.config import get_video_path
+from src.utils.texts import WELCOME_MESSAGE, WELCOME_MESSAGE_MOBILE
 
 # Константы для сообщений об ошибках
 VIDEO_UNAVAILABLE_MSG = "📺 Видео-инструкция временно недоступна\n\n{}"

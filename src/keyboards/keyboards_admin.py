@@ -1,8 +1,8 @@
 """Клавиатуры для админ-панели DeluxeBotNavigator"""
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from ..database import get_menu_items, get_menu_item, has_children
-from ..utils.texts import *
+from src.database import get_menu_items, get_menu_item, has_children
+from src.utils.texts import *
 
 def get_style_display_text(content_type: str) -> str:
     """Возвращает текст стиля без эмодзи для отображения"""
@@ -29,7 +29,8 @@ def admin_keyboard() -> InlineKeyboardMarkup:
              InlineKeyboardButton(text=BUTTON_ORDER_MODE, callback_data="admin_move_mode")],
             [InlineKeyboardButton(text=BUTTON_ADMIN_MANAGER, callback_data="manage_admins"),
              InlineKeyboardButton(text="📊 Статистика", callback_data="manage_stats")],
-            [InlineKeyboardButton(text=BUTTON_CLEAR, callback_data="admin_clear")],
+            [InlineKeyboardButton(text="⭐ Отзывы", callback_data="manage_reviews"),
+             InlineKeyboardButton(text=BUTTON_CLEAR, callback_data="admin_clear")],
             [InlineKeyboardButton(text=BUTTON_CLOSE, callback_data="admin_close")],
         ]
     )

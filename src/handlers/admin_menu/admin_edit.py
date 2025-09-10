@@ -2,13 +2,13 @@
 
 from aiogram import types, F
 from aiogram.fsm.context import FSMContext
-from ...database import get_menu_item, has_children
-from ...models.states import MenuState
-from ..common.utils import safe_delete_message
-from ...keyboards.keyboards_admin import edit_menu_keyboard, edit_children_keyboard
-from ...utils.texts import *
-from ..edit_actions.edit_menu import show_edit_button_menu
-from ..edit_actions import register_edit_actions
+from src.database import get_menu_item, has_children
+from src.models import MenuState
+from src.handlers.common.utils import safe_delete_message
+from src.keyboards.keyboards_admin import edit_menu_keyboard, edit_children_keyboard
+from src.utils.texts import *
+from src.handlers.edit_actions.edit_menu import show_edit_button_menu
+from src.handlers.edit_actions import register_edit_actions
 
 def register_admin_edit(dp):
     """Регистрация обработчиков редактирования"""

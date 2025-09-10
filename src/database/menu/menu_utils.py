@@ -2,7 +2,7 @@
 
 import logging
 from typing import List, Dict, Optional
-from ..base import get_db
+from src.database.base import get_db
 
 logger = logging.getLogger(__name__)
 

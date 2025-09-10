@@ -1,7 +1,7 @@
 """Модуль для запросов к администраторам"""
 
 from typing import List, Dict, Optional, Any
-from ..base import get_db
+from src.database.base import get_db
 
 def is_admin(user_id: int) -> bool:
     """Проверка, является ли пользователь администратором"""

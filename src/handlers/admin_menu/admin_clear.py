@@ -3,10 +3,10 @@
 from aiogram import types, F
 from aiogram.exceptions import TelegramMigrateToChat
 from aiogram.types import FSInputFile
-from ...config.config import MAX_CLEAR_ATTEMPTS, MAX_DELETE_RANGE, CLEAR_NOTIFICATION_DELAY, get_image_path
-from ..common.utils import send_notification_and_cleanup, safe_delete_message
-from ...keyboards.keyboards_admin import admin_keyboard
-from ...utils.texts import *
+from src.config.config import MAX_CLEAR_ATTEMPTS, MAX_DELETE_RANGE, CLEAR_NOTIFICATION_DELAY, get_image_path
+from src.handlers.common.utils import send_notification_and_cleanup, safe_delete_message
+from src.keyboards.keyboards_admin import admin_keyboard
+from src.utils.texts import *
 
 def register_admin_clear(dp, bot):
     @dp.callback_query(F.data == "admin_clear")

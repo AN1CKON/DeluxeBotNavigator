@@ -3,11 +3,11 @@
 import asyncio
 from aiogram import types, F
 from aiogram.fsm.context import FSMContext
-from ...database import update_menu_item, get_menu_item
-from ...models.states import MenuState
-from ..common.utils import safe_delete_message, delete_user_messages, send_notification_and_cleanup, validate_url
-from ...keyboards.keyboards_admin import edit_style_keyboard
-from ...utils.texts import *
+from src.database import update_menu_item, get_menu_item
+from src.models import MenuState
+from src.handlers.common.utils import safe_delete_message, delete_user_messages, send_notification_and_cleanup, validate_url
+from src.keyboards.keyboards_admin import edit_style_keyboard
+from src.utils.texts import *
 from . import edit_menu
 
 async def cleanup_invalid_url_messages(user_message, error_message, delay: int):

@@ -1,13 +1,13 @@
 from .user_interface import (
     register_start,
-    register_navigation, 
+    register_navigation,
     register_welcome
 )
 from .admin_manager import (
     register_admin_manage
 )
 from .admin_menu import (
-    register_admin_menu,
+    register_all_admin_handlers,
     register_admin_add,
     register_admin_edit,
     register_admin_delete,
@@ -16,14 +16,15 @@ from .admin_menu import (
     register_stats_handlers
 )
 from .edit_actions import register_edit_actions
-from .user_interface.review_handler import register_review_handlers
+from .user_interface.review_logic.review_handler import register_review_handlers
+from .common import *
 
 def register_handlers(dp, bot):
     # Порядок регистрации важен - сначала специфичные, потом общие
     register_start(dp)
     register_navigation(dp)
     register_welcome(dp)
-    register_admin_menu(dp, bot)  # Переименовано из admin_panel
+    register_all_admin_handlers(dp, bot)  # Регистрация всех админ-обработчиков
     register_admin_add(dp)
     register_admin_edit(dp)
     register_admin_delete(dp)

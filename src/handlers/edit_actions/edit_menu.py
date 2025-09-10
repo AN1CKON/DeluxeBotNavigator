@@ -2,9 +2,9 @@
 
 from aiogram import types
 from aiogram.fsm.context import FSMContext
-from ...database import get_menu_item, get_menu_items
-from ...utils.texts import *
-from ..common.utils import get_style_display_text
+from src.database import get_menu_item, get_menu_items
+from src.utils.texts import *
+from src.handlers.common.utils import get_style_display_text
 
 async def show_edit_button_menu(message: types.Message, item_id: int, state: FSMContext):
     """Показать меню редактирования для выбранной кнопки"""

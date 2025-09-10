@@ -1,20 +1,21 @@
 """Обработчик добавления пунктов меню"""
 
 import asyncio
+import os
+import datetime
 from aiogram import types, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile
-from ...database import add_menu_item, update_menu_item_image, get_db
-import os
-from ...models.states import MenuState
-from ..common.utils import (
+from src.database import add_menu_item, update_menu_item_image, get_db
+from src.models import MenuState
+from src.handlers.common.utils import (
     safe_delete_message, delete_user_messages, send_notification_and_cleanup, validate_url
 )
-from ...keyboards.keyboards_admin import (
+from src.keyboards.keyboards_admin import (
     parent_menu_keyboard, admin_keyboard, back_cancel_keyboard, style_keyboard, image_choice_keyboard
 )
-from ...config.config import get_image_path, MEDIA_PATH
-from ...utils.texts import *
+from src.config.config import get_image_path, MEDIA_PATH
+from src.utils.texts import *
 
 # Константы для работы с изображениями
 MAX_IMAGE_SIZE = 10 * 1024 * 1024  # 10 MB
@@ -22,7 +23,6 @@ BUTTON_IMAGES_DIR = "button_images"
 
 def generate_image_filename(item_id: int) -> str:
     """Генерирует имя файла для изображения кнопки"""
-    import datetime
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     return f"button_{item_id}_{timestamp}.jpg"
 

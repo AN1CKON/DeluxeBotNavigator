@@ -3,9 +3,9 @@
 import asyncio
 from aiogram import types, F
 from aiogram.fsm.context import FSMContext
-from ..common.utils import is_admin, is_super_admin, safe_delete_message
-from ...models.states import AdminStates
-from ...utils.texts import (
+from src.handlers.common.utils import is_admin, is_super_admin, safe_delete_message
+from src.models import AdminStates
+from src.utils.texts import (
     MSG_ADD_ADMIN_INSTRUCTION,
     MSG_ADMIN_ADDED_SUCCESS,
     MSG_REMOVE_ADMIN_INSTRUCTION,

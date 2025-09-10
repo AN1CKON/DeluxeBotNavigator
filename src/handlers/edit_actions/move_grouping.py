@@ -2,11 +2,11 @@
 
 from aiogram import types, F
 from aiogram.fsm.context import FSMContext
-from ..common.utils import safe_delete_message, safe_edit_message
-from ...database.positioning.core import group_buttons, ungroup_buttons, get_button_groups
-from ...database import get_menu_item
-from ...keyboards.move_keyboards import build_new_ungroup_keyboard, build_ungroup_mode_keyboard
-from ...utils.texts import MSG_UNGROUP_MODE_ACTIVE, MSG_UNGROUP_MODE_INSTRUCTIONS, MSG_ERROR_NO_GROUPS
+from src.handlers.common.utils import safe_delete_message, safe_edit_message
+from src.database.positioning.core import group_buttons, ungroup_buttons, get_button_groups
+from src.database import get_menu_item
+from src.keyboards.move_keyboards import build_new_ungroup_keyboard, build_ungroup_mode_keyboard
+from src.utils.texts import MSG_UNGROUP_MODE_ACTIVE, MSG_UNGROUP_MODE_INSTRUCTIONS, MSG_ERROR_NO_GROUPS
 from .move_utils import (
     MoveStateManager, MoveKeyboardBuilder, MessageTextBuilder, CallbackDataExtractor
 )

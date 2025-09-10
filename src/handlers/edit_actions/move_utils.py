@@ -1,8 +1,8 @@
 """Утилиты для работы с перемещением кнопок"""
 
 from aiogram.fsm.context import FSMContext
-from ...keyboards.move_keyboards import build_new_move_keyboard
-from ...utils.texts import (
+from src.keyboards.move_keyboards import build_new_move_keyboard
+from src.utils.texts import (
     MSG_MOVE_MODE_HEADER, MSG_MOVE_MODE_INSTRUCTIONS,
     MSG_GROUP_MODE_ACTIVE, MSG_GROUP_MODE_INSTRUCTIONS,
     MSG_FIRST_BUTTON_SELECTED, MSG_GROUP_READY,

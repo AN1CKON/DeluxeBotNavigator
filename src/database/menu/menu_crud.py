@@ -3,7 +3,7 @@
 import sqlite3
 import logging
 from typing import Optional
-from ..base import get_db, _get_next_position
+from src.database.base import get_db, _get_next_position
 
 logger = logging.getLogger(__name__)
 

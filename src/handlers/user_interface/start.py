@@ -4,11 +4,11 @@ from aiogram import types
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import FSInputFile
-from ...keyboards.keyboards import build_keyboard
-from ...config.config import get_image_path
-from ...database import is_new_user, register_user, update_admin_info
-from ..common.utils import is_admin
-from ...utils.texts import *
+from src.keyboards.keyboards import build_keyboard
+from src.config.config import get_image_path
+from src.database import is_new_user, register_user, update_admin_info
+from src.handlers.common.utils import is_admin
+from src.utils.texts import *
 
 async def show_main_menu(message: types.Message):
     """Показывает главное меню с фото"""

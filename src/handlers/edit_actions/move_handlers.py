@@ -2,9 +2,9 @@
 
 from aiogram import types, F
 from aiogram.fsm.context import FSMContext
-from ..common.utils import safe_delete_message, safe_edit_message
-from ...models.states import MenuState
-from ...database.positioning.core import (
+from src.handlers.common.utils import safe_delete_message, safe_edit_message
+from src.models import MenuState
+from src.database.positioning.core import (
     move_button_up, move_button_down, group_buttons, ungroup_buttons,
     move_group_up, move_group_down, get_button_groups
 )

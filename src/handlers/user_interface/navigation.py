@@ -4,11 +4,12 @@ import os
 from aiogram import types, F
 from aiogram.types import FSInputFile
 from aiogram.fsm.context import FSMContext
-from ...keyboards.keyboards import build_keyboard, close_text_keyboard
-from ...database import get_menu_item
-from ..common.utils import safe_delete_message, format_menu_item_display, show_main_menu_for_callback, safe_edit_message
-from ...utils.texts import *
-from ...config.config import MEDIA_PATH
+from src.keyboards.keyboards import build_keyboard, close_text_keyboard
+from src.database import get_menu_item
+from src.handlers.common.utils import safe_delete_message, format_menu_item_display, show_main_menu_for_callback, safe_edit_message
+from src.utils.texts import *
+from src.config.config import MEDIA_PATH
+from src.handlers.user_interface.review_logic import show_review_form
 
 def register_navigation(dp):
 
@@ -145,7 +146,6 @@ def register_navigation(dp):
         elif content_type == "review":
             # Показываем форму отзыва
             await callback.answer()
-            from .review_handler import show_review_form
             await show_review_form(callback.message, state)
 
     @dp.callback_query(F.data == "close_text")

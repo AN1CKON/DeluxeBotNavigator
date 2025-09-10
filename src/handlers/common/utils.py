@@ -4,9 +4,9 @@ import asyncio
 from aiogram import types
 from aiogram.types import FSInputFile
 from aiogram.exceptions import TelegramBadRequest
-from ...config.config import ADMIN_ID, DEFAULT_DELETE_COUNT, SUCCESS_NOTIFICATION_DELAY, get_image_path
-from ...utils.texts import *
-from ...database import is_admin, is_super_admin
+from src.config.config import ADMIN_ID, DEFAULT_DELETE_COUNT, SUCCESS_NOTIFICATION_DELAY, get_image_path
+from src.utils.texts import *
+from src.database import is_admin, is_super_admin
 
 async def safe_edit_message(message, text, reply_markup=None, parse_mode="HTML"):
     """Безопасное редактирование сообщения с обработкой ошибки 'message is not modified'"""

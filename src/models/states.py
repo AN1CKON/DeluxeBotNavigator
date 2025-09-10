@@ -47,3 +47,7 @@ class AdminStates(StatesGroup):
     editing_plugin_stat = State()
     editing_plugin_mode = State()
     waiting_for_edit_plugin_name = State()
+    
+    # Состояния для настройки защиты от спама отзывов
+    waiting_for_cooldown_value = State()
+    waiting_for_daily_limit_value = State()

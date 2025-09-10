@@ -2,7 +2,7 @@
 
 import sqlite3
 from typing import List, Dict, Optional, Tuple
-from ..base import get_db
+from src.database.base import get_db
 
 def get_menu_item_by_id(item_id: int) -> Optional[Dict]:
     """Получение элемента меню по ID"""

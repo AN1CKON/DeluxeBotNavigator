@@ -2,11 +2,11 @@
 
 from aiogram import types, F
 from aiogram.types import FSInputFile
-from ...database import delete_menu_item, get_menu_items, has_children, get_menu_item
-from ..common.utils import safe_delete_message, send_notification_and_cleanup
-from ...keyboards.keyboards_admin import delete_menu_keyboard, confirm_keyboard, admin_keyboard
-from ...config.config import get_image_path
-from ...utils.texts import *
+from src.database import delete_menu_item, get_menu_items, has_children, get_menu_item
+from src.handlers.common.utils import safe_delete_message, send_notification_and_cleanup
+from src.keyboards.keyboards_admin import delete_menu_keyboard, confirm_keyboard, admin_keyboard
+from src.config.config import get_image_path
+from src.utils.texts import *
 
 def register_admin_delete(dp):
     async def notify_and_return_to_panel(message, text):

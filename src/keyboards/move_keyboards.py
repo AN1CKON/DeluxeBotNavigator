@@ -1,9 +1,9 @@
 """Новые клавиатуры для режима перемещения с новым алгоритмом"""
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from ..database.positioning.core import get_ordered_items, get_button_groups, can_move_up_new, can_move_down_new
-from ..database import has_children, get_menu_item
-from ..utils.texts import *
+from src.database.positioning.core import get_ordered_items, get_button_groups, can_move_up_new, can_move_down_new
+from src.database import has_children, get_menu_item
+from src.utils.texts import *
 
 def build_new_move_keyboard(parent_id=None, selected_buttons=None, group_mode=False, editing_item_id=None, selected_item_id=None, selected_group_position=None) -> InlineKeyboardMarkup:
     """

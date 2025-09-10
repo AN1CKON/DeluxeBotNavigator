@@ -78,6 +78,20 @@ def init_db():
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )'''
     
+    REVIEW_SPAM_SETTINGS_TABLE_SQL = '''CREATE TABLE IF NOT EXISTS review_spam_settings (
+        id INTEGER PRIMARY KEY CHECK(id = 1),
+        cooldown_minutes INTEGER DEFAULT 0,
+        max_reviews_per_day INTEGER DEFAULT 3,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )'''
+    
+    REVIEW_LIMITS_TABLE_SQL = '''CREATE TABLE IF NOT EXISTS user_review_limits (
+        user_id INTEGER PRIMARY KEY,
+        last_review_time INTEGER NOT NULL,
+        reviews_today INTEGER DEFAULT 0,
+        last_reset_date TEXT NOT NULL
+    )'''
+    
     # Колонки для добавления в таблицу menu (если их нет)
     MENU_COLUMNS_TO_ADD = [
         ('updated_at', 'DATETIME'),
@@ -96,6 +110,8 @@ def init_db():
             c.execute(USERS_TABLE_SQL)
             c.execute(ADMINS_TABLE_SQL)
             c.execute(PLUGIN_STATS_TABLE_SQL)
+            c.execute(REVIEW_LIMITS_TABLE_SQL)
+            c.execute(REVIEW_SPAM_SETTINGS_TABLE_SQL)
             
             # Проверяем и добавляем недостающие колонки в таблицу menu
             c.execute("PRAGMA table_info(menu)")
@@ -112,6 +128,15 @@ def init_db():
                         c.execute("UPDATE menu SET position = id WHERE position IS NULL")
                     
                     logger.info(f"🔧 Добавлена колонка {column_name} в таблицу menu")
+            
+            # Инициализируем настройки защиты от спама по умолчанию
+            c.execute("SELECT COUNT(*) FROM review_spam_settings")
+            if c.fetchone()[0] == 0:
+                c.execute("""
+                    INSERT INTO review_spam_settings (id, cooldown_minutes, max_reviews_per_day)
+                    VALUES (1, 0, 3)
+                """)
+                logger.info("🔧 Инициализированы настройки защиты от спама по умолчанию")
             
             conn.commit()
             logger.info("🗄️ База данных инициализирована успешно")

@@ -1,7 +1,7 @@
 """Модуль для получения статистики по меню"""
 
 from typing import Dict, Any
-from ..base import get_db
+from src.database.base import get_db
 
 def get_menu_stats() -> Dict[str, Any]:
     """Получает статистику по меню"""

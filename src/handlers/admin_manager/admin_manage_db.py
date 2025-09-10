@@ -3,11 +3,11 @@
 import asyncio
 from typing import Dict, List, Optional, Tuple
 from aiogram import Bot
-from ...database import (
-    add_admin as db_add_admin, 
-    remove_admin as db_remove_admin, 
-    get_all_admins as db_get_all_admins, 
-    get_admin_info as db_get_admin_info, 
+from src.database import (
+    add_admin as db_add_admin,
+    remove_admin as db_remove_admin,
+    get_all_admins as db_get_all_admins,
+    get_admin_info as db_get_admin_info,
     update_admin_info as db_update_admin_info
 )
 from ...utils.texts import (

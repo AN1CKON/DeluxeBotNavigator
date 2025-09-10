@@ -1,7 +1,7 @@
 """Модуль для получения статистики по администраторам"""
 
 from typing import Dict
-from ..base import get_db
+from src.database.base import get_db
 
 def get_admins_statistics() -> Dict[str, int]:
     """Получение статистики по администраторам"""

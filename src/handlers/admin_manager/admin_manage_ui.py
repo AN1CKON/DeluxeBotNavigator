@@ -3,7 +3,7 @@
 import asyncio
 from typing import List, Dict
 from aiogram import types
-from ...utils.texts import (
+from src.utils.texts import (
     ADMIN_MANAGE_TITLE,
     ADMIN_DETAILED_LIST_TITLE,
     BUTTON_ADD_ADMIN,

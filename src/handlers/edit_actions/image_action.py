@@ -5,9 +5,9 @@ import uuid
 from typing import Optional, Tuple
 from aiogram import types, F
 from aiogram.fsm.context import FSMContext
-from ...database import get_menu_item, update_menu_item_image
-from ...utils.texts import *
-from ...models.states import MenuState
+from src.database import get_menu_item, update_menu_item_image
+from src.utils.texts import *
+from src.models import MenuState
 from ..common.utils import safe_delete_message, is_admin, send_notification_and_cleanup, delete_user_messages, get_style_display_text
 from ...config.config import MEDIA_PATH
 from . import edit_menu
