@@ -256,7 +256,7 @@ async def show_stats_management(message: types.Message):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="➕ Добавить плагин", callback_data="add_plugin_stat")],
         [InlineKeyboardButton(text="✏️ Редактировать", callback_data="edit_plugin_stats")],
-        [InlineKeyboardButton(text="⬅️ Назад", callback_data="admin_panel")]
+        [InlineKeyboardButton(text="⬅️ Назад", callback_data="admin_settings")]
     ])
 
     await message.answer(text, reply_markup=keyboard)

@@ -5,7 +5,7 @@ from aiogram.filters import Command
 from aiogram.types import FSInputFile, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.context import FSMContext
 from src.handlers.common.utils import is_admin, safe_delete_message, show_main_menu_for_callback
-from src.keyboards.keyboards_admin import admin_keyboard
+from src.keyboards.keyboards_admin import admin_keyboard, admin_settings_keyboard
 from src.keyboards.keyboards import build_keyboard
 from src.config.config import get_image_path
 from src.database import update_admin_info
@@ -67,6 +67,15 @@ def register_admin_menu_handlers(dp, bot):
 
         await safe_delete_message(callback.message)
         await show_reviews_management(callback.message)
+
+    @dp.callback_query(F.data == "admin_settings")
+    async def admin_settings_callback(callback: types.CallbackQuery):
+        """Обработчик кнопки настроек админ-панели"""
+        if not is_admin(callback.from_user.id):
+            return await callback.answer(NO_ACCESS_MESSAGE, show_alert=True)
+        
+        await safe_delete_message(callback.message)
+        await callback.message.answer("⚙️ Настройки", reply_markup=admin_settings_keyboard())
 
     @dp.callback_query(F.data == "back_to_admin")
     async def back_to_admin_callback(callback: types.CallbackQuery):

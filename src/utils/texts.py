@@ -30,6 +30,7 @@ BUTTON_EDIT = "✏️ Редактировать"
 BUTTON_DELETE = "🗑️ Удалить"
 BUTTON_ORDER_MODE = "📦 Упорядочить"
 BUTTON_ADMIN_MANAGER = "👥 Админы"
+BUTTON_SETTINGS = "⚙️ Настройки"
 BUTTON_CLEAR = "🧹 Очистить чат"
 
 # ========== Типы содержимого ==========

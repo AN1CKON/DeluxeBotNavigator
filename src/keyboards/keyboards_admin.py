@@ -27,11 +27,20 @@ def admin_keyboard() -> InlineKeyboardMarkup:
              InlineKeyboardButton(text=BUTTON_EDIT, callback_data="admin_edit")],
             [InlineKeyboardButton(text=BUTTON_DELETE, callback_data="admin_delete"),
              InlineKeyboardButton(text=BUTTON_ORDER_MODE, callback_data="admin_move_mode")],
-            [InlineKeyboardButton(text=BUTTON_ADMIN_MANAGER, callback_data="manage_admins"),
-             InlineKeyboardButton(text="📊 Статистика", callback_data="manage_stats")],
-            [InlineKeyboardButton(text="⭐ Отзывы", callback_data="manage_reviews"),
-             InlineKeyboardButton(text=BUTTON_CLEAR, callback_data="admin_clear")],
+            [InlineKeyboardButton(text=BUTTON_ADMIN_MANAGER, callback_data="manage_admins")],
+            [InlineKeyboardButton(text=BUTTON_SETTINGS, callback_data="admin_settings")],
+            [InlineKeyboardButton(text=BUTTON_CLEAR, callback_data="admin_clear")],
             [InlineKeyboardButton(text=BUTTON_CLOSE, callback_data="admin_close")],
+        ]
+    )
+
+def admin_settings_keyboard() -> InlineKeyboardMarkup:
+    """Клавиатура настроек админ-панели"""
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="⭐ Отзывы", callback_data="manage_reviews"),
+             InlineKeyboardButton(text="📊 Статистика", callback_data="manage_stats")],
+            [InlineKeyboardButton(text=BUTTON_EXIT, callback_data="back_to_admin")],
         ]
     )
 

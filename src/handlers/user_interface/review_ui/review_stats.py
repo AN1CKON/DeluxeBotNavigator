@@ -33,10 +33,10 @@ async def show_reviews_management(message):
 
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="👤 Проверить пользователя", callback_data="check_user_reviews")],
-            [InlineKeyboardButton(text="🔄 Сбросить лимиты", callback_data="reset_review_limits")],
+            [InlineKeyboardButton(text="👤 Проверить", callback_data="check_user_reviews"),
+             InlineKeyboardButton(text="🔄 Сбросить", callback_data="reset_review_limits")],
             [InlineKeyboardButton(text="⚙️ Изменить настройки", callback_data="configure_review_settings")],
-            [InlineKeyboardButton(text="⬅️ Назад", callback_data="back_to_admin")]
+            [InlineKeyboardButton(text="⬅️ Назад", callback_data="admin_settings")]
         ]
     )
 
