@@ -51,3 +51,6 @@ class AdminStates(StatesGroup):
     # Состояния для настройки защиты от спама отзывов
     waiting_for_cooldown_value = State()
     waiting_for_daily_limit_value = State()
+    
+    # Состояния для управления пользователями отзывов
+    waiting_for_user_id = State()

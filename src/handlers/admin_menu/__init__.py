@@ -57,7 +57,7 @@ def register_all_admin_handlers(dp, bot):
     # Регистрируем остальные обработчики
     register_admin_add(dp)
     register_admin_cancel(dp)
-    register_admin_clear(dp)
+    register_admin_clear(dp, bot)
     register_admin_delete(dp)
     register_admin_edit(dp)
     register_stats_handlers(dp)
