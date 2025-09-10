@@ -27,6 +27,7 @@ class MenuState(StatesGroup):
 
 class ReviewStates(StatesGroup):
     """Состояния для формы отзыва"""
+    waiting_for_rating = State()
     waiting_for_review_content = State()
 
 class WelcomeState(StatesGroup):
