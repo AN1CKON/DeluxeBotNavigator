@@ -51,8 +51,8 @@ async def show_edit_button_menu(message: types.Message, item_id: int, state: FSM
             types.InlineKeyboardButton(text=BUTTON_EDIT_IMAGE, callback_data=f"edit_action_image:{item_id}")
         ],
         [
-            types.InlineKeyboardButton(text=BUTTON_BACK, callback_data="admin_edit"),
-            types.InlineKeyboardButton(text=BUTTON_CANCEL, callback_data="admin_cancel")
+            types.InlineKeyboardButton(text=BUTTON_BACK, callback_data=CALLBACK_ADMIN_EDIT),
+            types.InlineKeyboardButton(text=BUTTON_CANCEL, callback_data=CALLBACK_ADMIN_CANCEL)
         ]
     ])
     

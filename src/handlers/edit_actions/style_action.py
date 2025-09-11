@@ -194,8 +194,8 @@ def edit_style_keyboard_with_back(item_id: int) -> types.InlineKeyboardMarkup:
         ],
         # Третья строка - статистика и отзыв
         [
-            types.InlineKeyboardButton(text="📊 Статистика", callback_data="edit_style_ctype:stats"),
-            types.InlineKeyboardButton(text=BUTTON_REVIEW, callback_data="edit_style_ctype:review")
+            types.InlineKeyboardButton(text="📊 Плагины", callback_data="edit_style_ctype:stats"),
+            types.InlineKeyboardButton(text=BUTTON_REVIEWS, callback_data="edit_style_ctype:review")
         ],
         # Четвертая строка - кнопка назад
         [types.InlineKeyboardButton(text=BUTTON_BACK, callback_data=f"back_to_edit_menu:{item_id}")]

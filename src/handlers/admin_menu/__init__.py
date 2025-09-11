@@ -20,7 +20,7 @@ from src.config.config import get_image_path
 from src.database import update_admin_info
 from src.utils.texts import *
 from src.handlers.user_interface.review_ui.review_admin import register_review_admin_handlers
-from src.handlers.user_interface.review_ui.review_settings import register_review_settings_handlers
+from src.handlers.user_interface.review_ui import register_review_settings_handlers
 from src.handlers.user_interface.review_ui.review_user_management import register_review_user_management_handlers
 
 from .admin_add import register_admin_add

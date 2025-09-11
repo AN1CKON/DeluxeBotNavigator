@@ -6,7 +6,14 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.context import FSMContext
 from src.handlers.common.utils import is_admin, safe_delete_message
 from src.models import AdminStates
-from src.utils.texts import NO_ACCESS_MESSAGE
+from src.utils.texts import (
+    NO_ACCESS_MESSAGE, CALLBACK_MANAGE_REVIEWS, CALLBACK_CHECK_USER_REVIEWS,
+    MSG_ENTER_USER_ID, MSG_INVALID_USER_ID, MSG_USER_STATS_HEADER,
+    MSG_USER_NO_REVIEWS, MSG_USER_LIMITS_RESET_SUCCESS, MSG_LAST_REVIEW_TIME,
+    MSG_REVIEWS_TODAY, MSG_TIME_UNTIL_NEXT, MSG_USER_STATUS,
+    MSG_USER_STATUS_READY, MSG_USER_STATUS_WAITING, BUTTON_RESET_LIMITS,
+    CALLBACK_RESET_USER_LIMITS_PREFIX
+)
 from src.database.base import get_db
 from src.handlers.user_interface.review_logic.review_spam_protection import spam_protection
 
@@ -14,17 +21,20 @@ from src.handlers.user_interface.review_logic.review_spam_protection import spam
 def register_review_user_management_handlers(dp):
     """Регистрация обработчиков для управления пользователями отзывов"""
 
-    @dp.callback_query(F.data == "check_user_reviews")
+    @dp.callback_query(F.data == CALLBACK_CHECK_USER_REVIEWS)
     async def check_user_reviews_callback(callback: types.CallbackQuery, state: FSMContext):
         """Обработчик проверки отзывов пользователя"""
         if not is_admin(callback.from_user.id):
-            return await callback.answer(NO_ACCESS_MESSAGE, show_alert=True)
+            try:
+                return await callback.answer(NO_ACCESS_MESSAGE, show_alert=True)
+            except Exception:
+                return
 
         await safe_delete_message(callback.message)
         await callback.message.answer(
-            "👤 Введите ID пользователя для проверки статистики отзывов:",
+            MSG_ENTER_USER_ID,
             reply_markup=InlineKeyboardMarkup(
-                inline_keyboard=[[InlineKeyboardButton(text="⬅️ Назад", callback_data="manage_reviews")]]
+                inline_keyboard=[[InlineKeyboardButton(text="⬅️ Назад", callback_data=CALLBACK_MANAGE_REVIEWS)]]
             )
         )
         await state.set_state(AdminStates.waiting_for_user_id)
@@ -43,20 +53,20 @@ def register_review_user_management_handlers(dp):
             user_stats = get_user_review_stats(user_id)
 
             if user_stats:
-                text = f"""<b>👤 Статистика пользователя {user_id}</b>
+                text = f"""<b>{MSG_USER_STATS_HEADER.format(user_id=user_id)}</b>
 
-📅 Последний отзыв: {user_stats['last_review_time']}
-📊 Отзывов сегодня: {user_stats['reviews_today']}
-⏰ Время до следующего отзыва: {user_stats['time_until_next']}
+{MSG_LAST_REVIEW_TIME.format(last_review_time=user_stats['last_review_time'])}
+{MSG_REVIEWS_TODAY.format(reviews_today=user_stats['reviews_today'])}
+{MSG_TIME_UNTIL_NEXT.format(time_until_next=user_stats['time_until_next'])}
 
-<b>Статус:</b> {user_stats['status']}"""
+<b>{MSG_USER_STATUS}</b> {user_stats['status']}"""
             else:
-                text = f"👤 Пользователь {user_id} еще не оставлял отзывы"
+                text = MSG_USER_NO_REVIEWS.format(user_id=user_id)
 
             keyboard = InlineKeyboardMarkup(
                 inline_keyboard=[
-                    [InlineKeyboardButton(text="🔄 Сбросить лимиты", callback_data=f"reset_user_limits_{user_id}")],
-                    [InlineKeyboardButton(text="⬅️ Назад", callback_data="manage_reviews")]
+                    [InlineKeyboardButton(text=BUTTON_RESET_LIMITS, callback_data=f"{CALLBACK_RESET_USER_LIMITS_PREFIX}{user_id}")],
+                    [InlineKeyboardButton(text="⬅️ Назад", callback_data=CALLBACK_MANAGE_REVIEWS)]
                 ]
             )
 
@@ -64,22 +74,25 @@ def register_review_user_management_handlers(dp):
 
         except ValueError:
             await message.answer(
-                "❌ Введите корректный ID пользователя (число)",
+                MSG_INVALID_USER_ID,
                 reply_markup=InlineKeyboardMarkup(
-                    inline_keyboard=[[InlineKeyboardButton(text="⬅️ Назад", callback_data="manage_reviews")]]
+                    inline_keyboard=[[InlineKeyboardButton(text="⬅️ Назад", callback_data=CALLBACK_MANAGE_REVIEWS)]]
                 )
             )
             return
 
         await state.clear()
 
-    @dp.callback_query(F.data.startswith("reset_user_limits_"))
+    @dp.callback_query(F.data.startswith(CALLBACK_RESET_USER_LIMITS_PREFIX))
     async def reset_user_limits_callback(callback: types.CallbackQuery):
         """Обработчик сброса лимитов конкретного пользователя"""
         if not is_admin(callback.from_user.id):
-            return await callback.answer(NO_ACCESS_MESSAGE, show_alert=True)
+            try:
+                return await callback.answer(NO_ACCESS_MESSAGE, show_alert=True)
+            except Exception:
+                return
 
-        user_id = int(callback.data.split("_")[3])
+        user_id = int(callback.data.split(CALLBACK_RESET_USER_LIMITS_PREFIX)[1])
 
         # Сбрасываем лимиты пользователя
         with get_db() as conn:
@@ -91,7 +104,10 @@ def register_review_user_management_handlers(dp):
             """, (user_id,))
             conn.commit()
 
-        await callback.answer(f"✅ Лимиты пользователя {user_id} сброшены", show_alert=True)
+        try:
+            await callback.answer(MSG_USER_LIMITS_RESET_SUCCESS.format(user_id=user_id), show_alert=True)
+        except Exception:
+            pass
         await safe_delete_message(callback.message)
 
 
@@ -117,13 +133,13 @@ def get_user_review_stats(user_id: int) -> dict:
 
                 if time_diff < cooldown_seconds:
                     remaining_minutes = (cooldown_seconds - time_diff) // 60
-                    status = f"⏰ Ожидает {remaining_minutes} мин"
+                    status = MSG_USER_STATUS_WAITING.format(remaining_minutes=remaining_minutes)
                     time_until_next = f"{remaining_minutes} мин"
                 else:
-                    status = "✅ Готов к отзыву"
+                    status = MSG_USER_STATUS_READY
                     time_until_next = "Готов"
             else:
-                status = "✅ Готов к отзыву"
+                status = MSG_USER_STATUS_READY
                 time_until_next = "Готов"
 
             return {

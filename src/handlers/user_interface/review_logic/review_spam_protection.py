@@ -4,6 +4,9 @@ import time
 from typing import Optional, Tuple
 from src.database.base import get_db
 
+# Глобальный словарь для хранения ID сообщений по чатам
+messages = {}
+
 
 class SpamProtection:
     """Класс для защиты от спама в системе отзывов"""

@@ -8,6 +8,7 @@ from src.database.positioning.core import (
     move_button_up, move_button_down, group_buttons, ungroup_buttons,
     move_group_up, move_group_down, get_button_groups
 )
+from src.utils.texts import CALLBACK_ADMIN_PANEL
 from ...database import get_menu_item
 from ...keyboards.move_keyboards import build_new_ungroup_keyboard, build_ungroup_mode_keyboard
 from ...utils.texts import MSG_UNGROUP_MODE_ACTIVE, MSG_UNGROUP_MODE_INSTRUCTIONS, MSG_ERROR_NO_GROUPS
@@ -133,7 +134,7 @@ class NavigationHandlers:
             await BaseMoveHandlers.update_move_interface(callback, state)
             await callback.answer(f"Вернулись к '{parent_item[2] if parent_item else 'корню'}'")
             
-        @dp.callback_query(F.data == "admin_panel")
+        @dp.callback_query(F.data == CALLBACK_ADMIN_PANEL)
         async def handle_admin_panel_exit(callback: types.CallbackQuery, state: FSMContext):
             """Выход из режима перемещения в админ-панель"""
             await safe_delete_message(callback.message)

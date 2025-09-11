@@ -9,7 +9,10 @@ from src.keyboards.keyboards_admin import admin_keyboard, admin_settings_keyboar
 from src.keyboards.keyboards import build_keyboard
 from src.config.config import get_image_path
 from src.database import update_admin_info
-from src.utils.texts import *
+from src.utils.texts import (
+    ADMIN_PANEL_TITLE, NO_ACCESS_MESSAGE, CALLBACK_ADMIN_CLOSE, CALLBACK_MANAGE_STATS,
+    CALLBACK_MANAGE_REVIEWS, CALLBACK_ADMIN_SETTINGS, CALLBACK_BACK_TO_ADMIN
+)
 from src.models import AdminStates
 from src.handlers.admin_menu.admin_stats import show_stats_management
 from src.handlers.user_interface.review_ui.review_stats import show_reviews_management
@@ -42,7 +45,7 @@ def register_admin_menu_handlers(dp, bot):
         photo = FSInputFile(get_image_path("admin.JPG"))
         await callback.message.answer_photo(photo, caption=ADMIN_PANEL_TITLE, reply_markup=admin_keyboard())
 
-    @dp.callback_query(F.data == "admin_close")
+    @dp.callback_query(F.data == CALLBACK_ADMIN_CLOSE)
     async def admin_close_callback(callback: types.CallbackQuery):
         """Обработчик закрытия админ-панели"""
         await safe_delete_message(callback.message)
@@ -50,7 +53,7 @@ def register_admin_menu_handlers(dp, bot):
         # Используем специальную функцию для callback'ов
         await show_main_menu_for_callback(callback)
 
-    @dp.callback_query(F.data == "manage_stats")
+    @dp.callback_query(F.data == CALLBACK_MANAGE_STATS)
     async def manage_stats_callback(callback: types.CallbackQuery):
         """Обработчик управления статистикой плагинов"""
         if not is_admin(callback.from_user.id):
@@ -59,7 +62,7 @@ def register_admin_menu_handlers(dp, bot):
         await safe_delete_message(callback.message)
         await show_stats_management(callback.message)
 
-    @dp.callback_query(F.data == "manage_reviews")
+    @dp.callback_query(F.data == CALLBACK_MANAGE_REVIEWS)
     async def manage_reviews_callback(callback: types.CallbackQuery):
         """Обработчик управления отзывами"""
         if not is_admin(callback.from_user.id):
@@ -68,16 +71,17 @@ def register_admin_menu_handlers(dp, bot):
         await safe_delete_message(callback.message)
         await show_reviews_management(callback.message)
 
-    @dp.callback_query(F.data == "admin_settings")
+    @dp.callback_query(F.data == CALLBACK_ADMIN_SETTINGS)
     async def admin_settings_callback(callback: types.CallbackQuery):
         """Обработчик кнопки настроек админ-панели"""
         if not is_admin(callback.from_user.id):
             return await callback.answer(NO_ACCESS_MESSAGE, show_alert=True)
         
         await safe_delete_message(callback.message)
-        await callback.message.answer("⚙️ Настройки", reply_markup=admin_settings_keyboard())
+        photo = FSInputFile(get_image_path("admin.JPG"))
+        await callback.message.answer_photo(photo, caption="⚙️ Настройки", reply_markup=admin_settings_keyboard())
 
-    @dp.callback_query(F.data == "back_to_admin")
+    @dp.callback_query(F.data == CALLBACK_BACK_TO_ADMIN)
     async def back_to_admin_callback(callback: types.CallbackQuery):
         """Обработчик возврата в админ-панель"""
         if not is_admin(callback.from_user.id):

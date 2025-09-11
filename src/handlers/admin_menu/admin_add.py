@@ -8,6 +8,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, FSInputFile
 from src.database import add_menu_item, update_menu_item_image, get_db
 from src.models import MenuState
+from src.utils.texts import *
 from src.handlers.common.utils import (
     safe_delete_message, delete_user_messages, send_notification_and_cleanup, validate_url
 )
@@ -62,16 +63,16 @@ def register_admin_add(dp):
         """Возврат к вводу названия"""
         await safe_delete_message(callback.message)
         await state.set_state(MenuState.waiting_for_title)
-        await callback.message.answer(MSG_ENTER_TITLE, reply_markup=back_cancel_keyboard("admin_add"), parse_mode="HTML")
+        await callback.message.answer(MSG_ENTER_TITLE, reply_markup=back_cancel_keyboard(CALLBACK_ADMIN_ADD), parse_mode="HTML")
 
-    @dp.callback_query(F.data == "back_to_style")
+    @dp.callback_query(F.data == CALLBACK_BACK_TO_STYLE)
     async def back_to_style(callback: types.CallbackQuery, state: FSMContext):
         """Возврат к выбору стиля"""
         await safe_delete_message(callback.message)
         await state.set_state(MenuState.waiting_for_content_type)
         await callback.message.answer(MSG_CHOOSE_STYLE, reply_markup=style_keyboard(), parse_mode="HTML")
 
-    @dp.callback_query(F.data == "admin_add")
+    @dp.callback_query(F.data == CALLBACK_ADMIN_ADD)
     async def admin_add_start(callback: types.CallbackQuery, state: FSMContext):
         """Начало процесса добавления"""
         await safe_delete_message(callback.message)
@@ -87,7 +88,7 @@ def register_admin_add(dp):
         await safe_delete_message(callback.message)
         await state.update_data(parent_id=parent_id)
         await state.set_state(MenuState.waiting_for_title)
-        await callback.message.answer(MSG_ENTER_TITLE, reply_markup=back_cancel_keyboard("admin_add"), parse_mode="HTML")
+        await callback.message.answer(MSG_ENTER_TITLE, reply_markup=back_cancel_keyboard(CALLBACK_ADMIN_ADD), parse_mode="HTML")
 
     # --- Message handlers ---
     @dp.message(MenuState.waiting_for_title)
@@ -118,7 +119,7 @@ def register_admin_add(dp):
         if content_type == "attachment":
             # Функционал в разработке
             kb = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text=BUTTON_BACK, callback_data="back_to_style")]
+                [InlineKeyboardButton(text=BUTTON_BACK, callback_data=CALLBACK_BACK_TO_STYLE)]
             ])
             await callback.message.answer(MSG_FEATURE_IN_DEVELOPMENT, reply_markup=kb, parse_mode="HTML")
             return
@@ -136,7 +137,7 @@ def register_admin_add(dp):
             "link": MSG_ENTER_CONTENT_LINK,
             "post_link": MSG_ENTER_CONTENT_LINK
         }.get(content_type, MSG_ENTER_CONTENT_TEXT)
-        await callback.message.answer(msg, reply_markup=back_cancel_keyboard("back_to_style"), parse_mode="HTML")
+        await callback.message.answer(msg, reply_markup=back_cancel_keyboard(CALLBACK_BACK_TO_STYLE), parse_mode="HTML")
 
     @dp.callback_query(F.data == "skip_image")
     async def skip_image(callback: types.CallbackQuery, state: FSMContext):
@@ -265,7 +266,7 @@ def register_admin_add(dp):
         await state.set_state(MenuState.waiting_for_image)
         await message.answer(MSG_CHOOSE_IMAGE_STEP, reply_markup=image_choice_keyboard(), parse_mode="HTML")
 
-    @dp.callback_query(F.data == "admin_panel")
+    @dp.callback_query(F.data == CALLBACK_ADMIN_PANEL)
     async def back_to_admin_panel(callback: types.CallbackQuery, state: FSMContext = None):
         """Возврат в админ-панель"""
         await safe_delete_message(callback.message)

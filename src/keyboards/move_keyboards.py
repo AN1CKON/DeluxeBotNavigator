@@ -205,7 +205,7 @@ def build_new_move_keyboard(parent_id=None, selected_buttons=None, group_mode=Fa
         # Кнопка сохранения (возврата) только в обычном режиме
         kb.append([InlineKeyboardButton(
             text=BUTTON_SAVE,
-            callback_data="admin_panel"  # Возвращаемся в главное меню админ-панели
+            callback_data=CALLBACK_ADMIN_PANEL  # Возвращаемся в главное меню админ-панели
         )])
     
     return InlineKeyboardMarkup(inline_keyboard=kb)
